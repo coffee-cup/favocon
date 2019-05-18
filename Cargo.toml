@@ -1,0 +1,11 @@
+[package]
+name = "favocon"
+version = "0.1.0"
+authors = ["Jake Runzer <jakerunzer@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "2.33.0"
+console = "0.7.5"
+ico = "0.1.0"
+image = "0.21.1"
