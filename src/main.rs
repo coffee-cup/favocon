@@ -1,6 +1,11 @@
 use clap::{App, Arg};
-use console::style;
+use console::{style, Emoji};
 use image::GenericImageView;
+
+// #[derive(Debug)]
+// struct Result {
+//     ico: &ico::IconDir;
+// }
 
 fn main() {
     let matches = App::new("favocon")
@@ -14,9 +19,17 @@ fn main() {
                 .index(1)
                 .help("icon to convert into favicon"),
         )
+        .arg(
+            Arg::with_name("OUTPUT")
+                .short("o")
+                .long("output")
+                .help("Directory to output files to")
+                .takes_value(true),
+        )
         .get_matches();
 
     let filename = matches.value_of("ICON").unwrap();
+    let outdir = matches.value_of("OUTPUT").unwrap_or("favocon");
 
     let img = image::open(filename).unwrap_or_else(|err| {
         error_out(&*format!("{:?}", err));
@@ -28,8 +41,16 @@ fn main() {
 
     let ico = create_favicon(&img);
 
-    let file = std::fs::File::create("test.ico").unwrap();
+    create_outdir(outdir).unwrap_or_else(|err| {
+        error_out(&*format!("{}", err));
+    });
+
+    // TODO: use path.join
+    let outfile = format!("{}/{}", outdir, "favicon.ico");
+    let file = std::fs::File::create(outfile.as_str()).unwrap();
     ico.write(file).unwrap();
+
+    println!("{}Saved your favicons to {}", Emoji("✨ ", ""), outdir)
 }
 
 fn create_favicon(img: &image::DynamicImage) -> ico::IconDir {
@@ -52,6 +73,13 @@ fn validate_img(img: &image::DynamicImage) -> Result<(), &'static str> {
         Ok(())
     } else {
         Err("Image must be square")
+    }
+}
+
+fn create_outdir(outdir: &str) -> Result<(), String> {
+    match std::fs::create_dir_all(outdir) {
+        Ok(_) => Ok(()),
+        Err(_) => Err(format!("Error creating directory {}", outdir)),
     }
 }
 
