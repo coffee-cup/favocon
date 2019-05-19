@@ -51,14 +51,14 @@ fn main() {
     sp.stop();
 
     println!(
-        "\n{}Saved your favicons to {}.",
+        "\n{}Saved your favicons to {}",
         Emoji("✨ ", ""),
         outdir.to_str().unwrap()
     );
 
     println!(
-        "\nPlace these files at the root of your site. \
-         \nCopy the following to the <head> of your HTML.\n\n{}",
+        "\nPlace these files at the root of your site\
+         \nCopy the following to the <head> of your HTML\n\n{}",
         html_string
     );
 }
