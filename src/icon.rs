@@ -43,7 +43,7 @@ fn create_manifest(outdir: &Path, html_string: &mut String) -> io::Result<()> {
     let mut file = File::create(path)?;
     file.write_all(manifest.as_bytes())?;
 
-    let link_rel = format!("<link rel=\"manifest\" href=\"/site.webmanifest\">\n",);
+    let link_rel = "<link rel=\"manifest\" href=\"/site.webmanifest\">\n".to_string();
     html_string.push_str(link_rel.as_str());
 
     Ok(())

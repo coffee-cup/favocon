@@ -31,11 +31,11 @@ fn main() {
     let outdir = Path::new(matches.value_of("OUTPUT").unwrap_or("favocon"));
 
     let img = image::open(filename).unwrap_or_else(|err| {
-        error_out(&*format!("{}", err));
+        error_out(&err.to_string());
     });
 
     icon::validate_img(&img).unwrap_or_else(|err| {
-        error_out(&*format!("{}", err));
+        error_out(&err.to_string());
     });
 
     create_outdir(outdir).unwrap_or_else(|err| {
