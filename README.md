@@ -1,5 +1,7 @@
 # Favocon
 
+[![badge](https://action-badges.now.sh/coffee-cup/favocon)](https://github.com/coffee-cup/favocon/actions)
+
 Command line utility for creating
 [favicons](https://en.wikipedia.org/wiki/Favicon) from a PNG image.
 
