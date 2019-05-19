@@ -1,6 +1,7 @@
 use clap::{App, Arg};
 use console::{style, Emoji};
 use image::GenericImageView;
+use std::path::Path;
 
 // #[derive(Debug)]
 // struct Result {
@@ -45,9 +46,9 @@ fn main() {
         error_out(&*format!("{}", err));
     });
 
-    // TODO: use path.join
-    let outfile = format!("{}/{}", outdir, "favicon.ico");
-    let file = std::fs::File::create(outfile.as_str()).unwrap();
+    let outfile = Path::new(outdir);
+    let outfile = outfile.join("favicon.ico");
+    let file = std::fs::File::create(outfile).unwrap();
     ico.write(file).unwrap();
 
     println!("{}Saved your favicons to {}", Emoji("✨ ", ""), outdir)
