@@ -3,11 +3,6 @@ use console::{style, Emoji};
 use image::GenericImageView;
 use std::path::Path;
 
-// #[derive(Debug)]
-// struct Result {
-//     ico: &ico::IconDir;
-// }
-
 fn main() {
     let matches = App::new("favocon")
         .version("0.1.0")
@@ -30,33 +25,44 @@ fn main() {
         .get_matches();
 
     let filename = matches.value_of("ICON").unwrap();
-    let outdir = matches.value_of("OUTPUT").unwrap_or("favocon");
+    let outdir = Path::new(matches.value_of("OUTPUT").unwrap_or("favocon"));
 
     let img = image::open(filename).unwrap_or_else(|err| {
-        error_out(&*format!("{:?}", err));
+        error_out(&*format!("{}", err));
     });
 
     validate_img(&img).unwrap_or_else(|err| {
         error_out(&*format!("{}", err));
     });
 
-    let ico = create_favicon(&img);
-
     create_outdir(outdir).unwrap_or_else(|err| {
         error_out(&*format!("{}", err));
     });
 
-    let outfile = Path::new(outdir);
-    let outfile = outfile.join("favicon.ico");
-    let file = std::fs::File::create(outfile).unwrap();
-    ico.write(file).unwrap();
+    let ico_sizes = vec![16, 32, 48];
+    let png_sizes = vec![16, 32];
 
-    println!("{}Saved your favicons to {}", Emoji("✨ ", ""), outdir)
+    let ico_dir = create_favicon(ico_sizes, &img);
+
+    let icofile_path = outdir.join("favicon.ico");
+    let icofile = std::fs::File::create(&icofile_path).unwrap();
+    ico_dir.write(icofile).unwrap();
+
+    for size in png_sizes {
+        let path = outdir.join(&*format!("favicon-{}x{}.png", size, size));
+        let new_img = img.resize_exact(size, size, image::FilterType::Nearest);
+        new_img.save(&path).unwrap();
+    }
+
+    println!(
+        "{}Saved your favicons to {}",
+        Emoji("✨ ", ""),
+        outdir.to_str().unwrap()
+    )
 }
 
-fn create_favicon(img: &image::DynamicImage) -> ico::IconDir {
+fn create_favicon(sizes: Vec<u32>, img: &image::DynamicImage) -> ico::IconDir {
     let mut icon_dir = ico::IconDir::new(ico::ResourceType::Icon);
-    let sizes = vec![48, 32, 16];
 
     for size in sizes {
         let new_img = img.resize_exact(size, size, image::FilterType::Nearest);
@@ -77,10 +83,13 @@ fn validate_img(img: &image::DynamicImage) -> Result<(), &'static str> {
     }
 }
 
-fn create_outdir(outdir: &str) -> Result<(), String> {
+fn create_outdir(outdir: &Path) -> Result<(), String> {
     match std::fs::create_dir_all(outdir) {
         Ok(_) => Ok(()),
-        Err(_) => Err(format!("Error creating directory {}", outdir)),
+        Err(_) => Err(format!(
+            "Error creating directory {}",
+            outdir.to_str().unwrap()
+        )),
     }
 }
 
