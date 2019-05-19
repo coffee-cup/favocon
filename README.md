@@ -3,6 +3,9 @@
 Command line utility for creating
 [favicons](https://en.wikipedia.org/wiki/Favicon) from a PNG image.
 
+![favocon gif](https://user-images.githubusercontent.com/3044853/57985838-bcd6f380-7a65-11e9-9b24-afb6ccfc700d.gif)
+
+
 
 ## Commands
 
@@ -12,16 +15,7 @@ Create a directory of favicons to be used on your site.
 favocon icon.png -o outdir/
 ```
 
-The following favicons will be created.
-
-``` shell
-outdir/
-  favicon.ico
-  favicon-16x16.png
-  favicon-32x32.png
-```
-
-The icon you provide must be square.
+The icon you provide as input must be square.
 
 ## Building
 
