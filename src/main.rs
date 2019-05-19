@@ -1,7 +1,10 @@
 use clap::{App, Arg};
 use console::{style, Emoji};
-use image::GenericImageView;
+use spinners::{Spinner, Spinners};
+use std::io;
 use std::path::Path;
+
+mod icon;
 
 fn main() {
     let matches = App::new("favocon")
@@ -31,7 +34,7 @@ fn main() {
         error_out(&*format!("{}", err));
     });
 
-    validate_img(&img).unwrap_or_else(|err| {
+    icon::validate_img(&img).unwrap_or_else(|err| {
         error_out(&*format!("{}", err));
     });
 
@@ -39,58 +42,29 @@ fn main() {
         error_out(&*format!("{}", err));
     });
 
-    let ico_sizes = vec![16, 32, 48];
-    let png_sizes = vec![16, 32];
+    let sp = Spinner::new(Spinners::Dots3, "Creating favicons".into());
 
-    let ico_dir = create_favicon(ico_sizes, &img);
+    let html_string = icon::create_all_favicons(&img, outdir).unwrap_or_else(|_| {
+        error_out("Error creating icons");
+    });
 
-    let icofile_path = outdir.join("favicon.ico");
-    let icofile = std::fs::File::create(&icofile_path).unwrap();
-    ico_dir.write(icofile).unwrap();
-
-    for size in png_sizes {
-        let path = outdir.join(&*format!("favicon-{}x{}.png", size, size));
-        let new_img = img.resize_exact(size, size, image::FilterType::Nearest);
-        new_img.save(&path).unwrap();
-    }
+    sp.stop();
 
     println!(
-        "{}Saved your favicons to {}",
+        "\n{}Saved your favicons to {}.",
         Emoji("✨ ", ""),
         outdir.to_str().unwrap()
-    )
+    );
+
+    println!(
+        "\nPlace these files at the root of your site. \
+         \nCopy the following to the <head> of your HTML\n\n{}.",
+        html_string
+    );
 }
 
-fn create_favicon(sizes: Vec<u32>, img: &image::DynamicImage) -> ico::IconDir {
-    let mut icon_dir = ico::IconDir::new(ico::ResourceType::Icon);
-
-    for size in sizes {
-        let new_img = img.resize_exact(size, size, image::FilterType::Nearest);
-        let ico_img = ico::IconImage::from_rgba_data(size, size, new_img.raw_pixels());
-
-        icon_dir.add_entry(ico::IconDirEntry::encode(&ico_img).unwrap());
-    }
-
-    icon_dir
-}
-
-fn validate_img(img: &image::DynamicImage) -> Result<(), &'static str> {
-    let (width, height) = img.dimensions();
-    if width == height {
-        Ok(())
-    } else {
-        Err("Image must be square")
-    }
-}
-
-fn create_outdir(outdir: &Path) -> Result<(), String> {
-    match std::fs::create_dir_all(outdir) {
-        Ok(_) => Ok(()),
-        Err(_) => Err(format!(
-            "Error creating directory {}",
-            outdir.to_str().unwrap()
-        )),
-    }
+fn create_outdir(outdir: &Path) -> io::Result<()> {
+    std::fs::create_dir_all(outdir)
 }
 
 fn error_out(message: &str) -> ! {
