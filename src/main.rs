@@ -56,7 +56,7 @@ fn main() {
         outdir.to_str().unwrap()
     );
 
-    println!(
+    print!(
         "\nPlace these files at the root of your site\
          \nCopy the following to the <head> of your HTML\n\n{}",
         html_string
