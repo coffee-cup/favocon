@@ -58,7 +58,7 @@ fn main() {
 
     println!(
         "\nPlace these files at the root of your site. \
-         \nCopy the following to the <head> of your HTML\n\n{}.",
+         \nCopy the following to the <head> of your HTML.\n\n{}",
         html_string
     );
 }

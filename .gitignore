@@ -1,5 +1,6 @@
 /target
 **/*.rs.bk
 
-# test icon
+# testing
 icon.png
+favocon
