@@ -3,9 +3,7 @@
 Command line utility for creating
 [favicons](https://en.wikipedia.org/wiki/Favicon) from a PNG image.
 
-![favocon gif](https://user-images.githubusercontent.com/3044853/57985838-bcd6f380-7a65-11e9-9b24-afb6ccfc700d.gif)
-
-
+![favocon-gif](https://user-images.githubusercontent.com/3044853/57985881-5dc5ae80-7a66-11e9-8a8a-fff327b83e73.gif)
 
 ## Commands
 
