@@ -3,6 +3,12 @@ name = "favocon"
 version = "0.1.0"
 authors = ["Jake Runzer <jakerunzer@gmail.com>"]
 description = "Create favicons from an image"
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/coffee-cup/favocon"
+repository = "https://github.com/coffee-cup/favocon"
+keywords = ["favicon", "icon", "cli", "website", "image"]
+categories = ["command-line-utilities"]
 edition = "2018"
 
 [dependencies]

@@ -17,6 +17,15 @@ favocon icon.png -o outdir/
 
 The icon you provide as input must be square.
 
+## Installation
+
+Favocon is available through [Cargo](https://doc.rust-lang.org/cargo/).
+
+- Install [Rust](https://www.rust-lang.org/en-US/install.html)
+- `cargo install favocon`
+- The `favocon` binary will be installed into `$CARGO_HOME/.bin/favocon`. This
+  should be in your `PATH` already if you're using rustup.
+
 ## Building
 
 - Ensure you have the [Rust toolchain
