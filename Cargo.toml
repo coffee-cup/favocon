@@ -2,6 +2,7 @@
 name = "favocon"
 version = "0.1.0"
 authors = ["Jake Runzer <jakerunzer@gmail.com>"]
+description = "Create favicons from an image"
 edition = "2018"
 
 [dependencies]

@@ -7,10 +7,13 @@ use std::path::Path;
 mod icon;
 
 fn main() {
+    const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+    const DESC: &'static str = env!("CARGO_PKG_DESCRIPTION");
+
     let matches = App::new("favocon")
-        .version("0.1.0")
+        .version(VERSION)
         .author("Jake Runzer <jakerunzer@gmail.com>")
-        .about("Create favicons from images")
+        .about(DESC)
         .arg(
             Arg::with_name("ICON")
                 .required(true)
