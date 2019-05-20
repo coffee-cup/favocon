@@ -1,6 +1,6 @@
 use assert_cmd::prelude::*;
-use std::path::Path;
 use std::process::Command;
+use tempdir::TempDir;
 
 #[test]
 fn icon_doesnt_exist() -> Result<(), Box<std::error::Error>> {
@@ -16,7 +16,8 @@ fn icon_doesnt_exist() -> Result<(), Box<std::error::Error>> {
 
 #[test]
 fn icon_exists() -> Result<(), Box<std::error::Error>> {
-    let outdir = Path::new("tests/out");
+    let tmp_dir = TempDir::new("out")?;
+    let outdir = tmp_dir.path();
 
     let mut cmd = Command::cargo_bin("favocon")?;
 
@@ -27,8 +28,6 @@ fn icon_exists() -> Result<(), Box<std::error::Error>> {
     let icon_dir = ico::IconDir::read(file).unwrap();
 
     assert_eq!(icon_dir.entries().len(), 3);
-
-    std::fs::remove_dir_all(outdir).unwrap();
 
     Ok(())
 }
