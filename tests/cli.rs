@@ -3,18 +3,6 @@ use std::path::Path;
 use std::process::Command;
 use tempdir::TempDir;
 
-#[test]
-fn icon_doesnt_exist() -> Result<(), Box<std::error::Error>> {
-    let mut cmd = Command::cargo_bin("favocon")?;
-
-    cmd.arg("foo.png");
-    cmd.assert()
-        .failure()
-        .stderr("No such file or directory (os error 2)\n");
-
-    Ok(())
-}
-
 fn create_icon(path: &Path) -> Result<(), Box<std::error::Error>> {
     let tmp_dir = TempDir::new("out")?;
     let outdir = tmp_dir.path();
@@ -28,6 +16,28 @@ fn create_icon(path: &Path) -> Result<(), Box<std::error::Error>> {
     let icon_dir = ico::IconDir::read(file).unwrap();
 
     assert_eq!(icon_dir.entries().len(), 3);
+
+    Ok(())
+}
+
+#[test]
+fn icon_doesnt_exist() -> Result<(), Box<std::error::Error>> {
+    let mut cmd = Command::cargo_bin("favocon")?;
+
+    cmd.arg("foo.png");
+    cmd.assert()
+        .failure()
+        .stderr("No such file or directory (os error 2)\n");
+
+    Ok(())
+}
+
+#[test]
+fn invalid_size_icon() -> Result<(), Box<std::error::Error>> {
+    let mut cmd = Command::cargo_bin("favocon")?;
+
+    cmd.arg("tests/invalid_icon.png");
+    cmd.assert().failure().stderr("Image must be square\n");
 
     Ok(())
 }
