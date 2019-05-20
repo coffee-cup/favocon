@@ -7,8 +7,8 @@ use std::path::Path;
 mod icon;
 
 fn main() {
-    const VERSION: &'static str = env!("CARGO_PKG_VERSION");
-    const DESC: &'static str = env!("CARGO_PKG_DESCRIPTION");
+    const VERSION: &str = env!("CARGO_PKG_VERSION");
+    const DESC: &str = env!("CARGO_PKG_DESCRIPTION");
 
     let matches = App::new("favocon")
         .version(VERSION)

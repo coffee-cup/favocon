@@ -20,8 +20,7 @@ fn create_icon_dir(sizes: Vec<u32>, img: &image::DynamicImage) -> io::Result<ico
 fn create_manifest(outdir: &Path, html_string: &mut String) -> io::Result<()> {
     let path = outdir.join("site.webmanifest");
 
-    let manifest = format!(
-        r##"{{
+    let manifest = r##"{{
   "name": "",
   "short_name": "",
   "icons": [
@@ -40,10 +39,7 @@ fn create_manifest(outdir: &Path, html_string: &mut String) -> io::Result<()> {
   "background_color": "#ffffff",
   "display": "standalone"
 }}
-"##
-    );
-
-    println!("{}", manifest);
+"##;
 
     let mut file = File::create(path)?;
     file.write_all(manifest.as_bytes())?;
