@@ -19,7 +19,7 @@ The icon you provide as input must be square.
 
 ## Installation
 
-Favocon is available through [Cargo](https://doc.rust-lang.org/cargo/).
+Favocon is available through [Cargo](https://crates.io/crates/favocon).
 
 - Install [Rust](https://www.rust-lang.org/en-US/install.html)
 - `cargo install favocon`
