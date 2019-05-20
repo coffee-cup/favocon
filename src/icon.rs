@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io;
 use std::io::prelude::*;
 use std::path::Path;
+use tempdir::TempDir;
 
 fn create_icon_dir(sizes: Vec<u32>, img: &image::DynamicImage) -> io::Result<ico::IconDir> {
     let mut icon_dir = ico::IconDir::new(ico::ResourceType::Icon);
@@ -56,6 +57,23 @@ pub fn validate_img(img: &image::DynamicImage) -> Result<(), &'static str> {
         Ok(())
     } else {
         Err("Image must be square")
+    }
+}
+
+// Save image to tmp file so it is converted to png
+pub fn convert_to_png(img: &image::DynamicImage) -> io::Result<image::DynamicImage> {
+    let tmp_dir = TempDir::new("favocon").unwrap();
+    let png_file_path = tmp_dir.path().join("img.png");
+
+    let img = img.to_rgba();
+    img.save(&png_file_path)?;
+
+    match image::open(&png_file_path) {
+        Ok(img) => Ok(img),
+        Err(_) => Err(io::Error::new(
+            io::ErrorKind::Other,
+            "Error converting image to png",
+        )),
     }
 }
 

@@ -41,8 +41,12 @@ fn main() {
         error_out(&err.to_string());
     });
 
+    let img = icon::convert_to_png(&img).unwrap_or_else(|err| {
+        error_out(&err.to_string());
+    });
+
     create_outdir(outdir).unwrap_or_else(|err| {
-        error_out(&*format!("{}", err));
+        error_out(&err.to_string());
     });
 
     let sp = Spinner::new(Spinners::Dots3, "Creating favicons".into());

@@ -1,4 +1,5 @@
 use assert_cmd::prelude::*;
+use std::path::Path;
 use std::process::Command;
 use tempdir::TempDir;
 
@@ -14,14 +15,13 @@ fn icon_doesnt_exist() -> Result<(), Box<std::error::Error>> {
     Ok(())
 }
 
-#[test]
-fn icon_exists() -> Result<(), Box<std::error::Error>> {
+fn create_icon(path: &Path) -> Result<(), Box<std::error::Error>> {
     let tmp_dir = TempDir::new("out")?;
     let outdir = tmp_dir.path();
 
     let mut cmd = Command::cargo_bin("favocon")?;
 
-    cmd.arg("tests/icon.png").arg("-o").arg(outdir);
+    cmd.arg(path).arg("-o").arg(outdir);
     cmd.assert().success();
 
     let file = std::fs::File::open(outdir.join("favicon.ico")).unwrap();
@@ -30,4 +30,14 @@ fn icon_exists() -> Result<(), Box<std::error::Error>> {
     assert_eq!(icon_dir.entries().len(), 3);
 
     Ok(())
+}
+
+#[test]
+fn icon_created_from_png() -> Result<(), Box<std::error::Error>> {
+    create_icon(Path::new("tests/icon.png"))
+}
+
+#[test]
+fn icon_created_from_jpg() -> Result<(), Box<std::error::Error>> {
+    create_icon(Path::new("tests/icon.jpg"))
 }
