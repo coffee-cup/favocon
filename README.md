@@ -37,13 +37,7 @@ installed](https://doc.rust-lang.org/cargo/getting-started/installation.html).
 cargo build
 ```
 
-- The executable is at `target/debug/favocon/`. Copy to somewhere in your PATH.
-
-``` shell
-target/debug/favocon icon.png -o outdir
-```
-
-- Or use `cargo run`.
+- Run with `cargo run`.
 
 ``` shell
 cargo run -- icon.png -o outdir
