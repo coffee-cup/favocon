@@ -1,4 +1,5 @@
 use assert_cmd::prelude::*;
+use serde_json::Value;
 use std::path::Path;
 use std::process::Command;
 use tempdir::TempDir;
@@ -16,6 +17,10 @@ fn create_icon(path: &Path) -> Result<(), Box<dyn std::error::Error>> {
     let icon_dir = ico::IconDir::read(file).unwrap();
 
     assert_eq!(icon_dir.entries().len(), 3);
+
+    let manifest_contents = std::fs::read_to_string(outdir.join("site.webmanifest")).unwrap();
+    assert_ne!(manifest_contents, "");
+    let _: Value = serde_json::from_str(manifest_contents.as_str()).unwrap();
 
     Ok(())
 }

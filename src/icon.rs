@@ -21,25 +21,25 @@ fn create_icon_dir(sizes: Vec<u32>, img: &image::DynamicImage) -> io::Result<ico
 fn create_manifest(outdir: &Path, html_string: &mut String) -> io::Result<()> {
     let path = outdir.join("site.webmanifest");
 
-    let manifest = r##"{{
+    let manifest = r##"{
   "name": "",
   "short_name": "",
   "icons": [
-    {{
+    {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
-    }},
-    {{
+    },
+    {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
-    }}
+    }
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone"
-}}
+}
 "##;
 
     let mut file = File::create(path)?;
