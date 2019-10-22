@@ -3,7 +3,7 @@ use std::path::Path;
 use std::process::Command;
 use tempdir::TempDir;
 
-fn create_icon(path: &Path) -> Result<(), Box<std::error::Error>> {
+fn create_icon(path: &Path) -> Result<(), Box<dyn std::error::Error>> {
     let tmp_dir = TempDir::new("out")?;
     let outdir = tmp_dir.path();
 
@@ -21,7 +21,7 @@ fn create_icon(path: &Path) -> Result<(), Box<std::error::Error>> {
 }
 
 #[test]
-fn icon_doesnt_exist() -> Result<(), Box<std::error::Error>> {
+fn icon_doesnt_exist() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("favocon")?;
 
     cmd.arg("foo.png");
@@ -33,7 +33,7 @@ fn icon_doesnt_exist() -> Result<(), Box<std::error::Error>> {
 }
 
 #[test]
-fn invalid_size_icon() -> Result<(), Box<std::error::Error>> {
+fn invalid_size_icon() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("favocon")?;
 
     cmd.arg("tests/invalid_icon.png");
@@ -43,11 +43,11 @@ fn invalid_size_icon() -> Result<(), Box<std::error::Error>> {
 }
 
 #[test]
-fn icon_created_from_png() -> Result<(), Box<std::error::Error>> {
+fn icon_created_from_png() -> Result<(), Box<dyn std::error::Error>> {
     create_icon(Path::new("tests/icon.png"))
 }
 
 #[test]
-fn icon_created_from_jpg() -> Result<(), Box<std::error::Error>> {
+fn icon_created_from_jpg() -> Result<(), Box<dyn std::error::Error>> {
     create_icon(Path::new("tests/icon.jpg"))
 }
