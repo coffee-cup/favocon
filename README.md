@@ -1,6 +1,7 @@
 # Favocon
 
-[![badge](https://action-badges.now.sh/coffee-cup/favocon)](https://github.com/coffee-cup/favocon/actions)
+[![ci badge](https://action-badges.now.sh/coffee-cup/favocon)](https://github.com/coffee-cup/favocon/actions)
+[![crates.io badge](http://meritbadge.herokuapp.com/favocon)](https://crates.io/crates/favocon)
 
 Command line utility for creating
 [favicons](https://en.wikipedia.org/wiki/Favicon) from a PNG image.
