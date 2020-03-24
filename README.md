@@ -1,6 +1,6 @@
 # Favocon
 
-[![ci badge](https://action-badges.now.sh/coffee-cup/favocon)](https://github.com/coffee-cup/favocon/actions)
+![CI](https://github.com/coffee-cup/favocon/workflows/CI/badge.svg)
 [![crates.io badge](http://meritbadge.herokuapp.com/favocon)](https://crates.io/crates/favocon)
 
 Command line utility for creating
