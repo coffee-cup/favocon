@@ -1,6 +1,6 @@
 [package]
 name = "favocon"
-version = "1.0.1"
+version = "1.1.0"
 authors = ["Jake Runzer <jakerunzer@gmail.com>"]
 description = "Create favicons from an image"
 license = "MIT"
