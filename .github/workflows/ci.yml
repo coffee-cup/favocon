@@ -1,0 +1,19 @@
+name: CI
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - working-directory: ./rust
+        run: cargo fmt -- --check
+      - working-directory: ./rust
+        run: cargo clippy
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - working-directory: ./rust
+        run: cargo build --verbose
+      - working-directory: ./rust
+        run: cargo test --verbose
