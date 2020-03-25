@@ -45,7 +45,7 @@ fn create_manifest(outdir: &Path, html_string: &mut String) -> io::Result<()> {
     let mut file = File::create(path)?;
     file.write_all(manifest.as_bytes())?;
 
-    let link_rel = "<link rel=\"manifest\" href=\"/site.webmanifest\">\n".to_string();
+    let link_rel = "<link rel=\"manifest\" href=\"/site.webmanifest\" />\n".to_string();
     html_string.push_str(link_rel.as_str());
 
     Ok(())
@@ -95,7 +95,7 @@ pub fn create_all_favicons(img: &image::DynamicImage, outdir: &Path) -> io::Resu
         let new_img = img.resize_exact(size, size, image::FilterType::CatmullRom);
         new_img.save(&path)?;
 
-        let link_rel = format!("<link rel=\"icon\" type=\"image/png\" sizes=\"{size}x{size}\" href=\"/favicon-{size}x{size}.png\">\n", size=size);
+        let link_rel = format!("<link rel=\"icon\" type=\"image/png\" sizes=\"{size}x{size}\" href=\"/favicon-{size}x{size}.png\" />\n", size=size);
         html_string.push_str(link_rel.as_str());
     }
 
@@ -106,7 +106,7 @@ pub fn create_all_favicons(img: &image::DynamicImage, outdir: &Path) -> io::Resu
     new_img.save(&path)?;
 
     let mut html_string = format!(
-        "{}<link rel=\"apple-touch-icon\" sizes=\"{}x{}\" href=\"/apple-touch-icon.png\">\n",
+        "{}<link rel=\"apple-touch-icon\" sizes=\"{}x{}\" href=\"/apple-touch-icon.png\" />\n",
         html_string, apple_size, apple_size
     );
 
