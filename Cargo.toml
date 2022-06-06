@@ -15,7 +15,7 @@ edition = "2018"
 clap = "2.33.0"
 console = "0.7.5"
 ico = "0.1.0"
-image = "0.21.1"
+image = "0.22.5"
 spinners = "1.0.0"
 tempdir = "0.3.7"
 
